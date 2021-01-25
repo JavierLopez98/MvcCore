@@ -8,18 +8,32 @@ using System.Threading.Tasks;
 
 namespace MvcCore.Repository
 {
-    public class RepositoryDepartamentosSql : IRepositoryDepartamentos
+    public class RepositoryHospital : IRepositoryHospital
     {
-
         HospitalContext context;
-
-        public RepositoryDepartamentosSql(HospitalContext context)
+        public RepositoryHospital(HospitalContext context)
         {
             this.context = context;
         }
+
+        #region Empleados
+        public List<Empleado> GetEmpleados()
+        {
+            return this.context.Empleados.ToList();
+        }
+        public List<Empleado> BuscaEmpleadosDept(List<int> iddept)
+        {
+            var consulta = from datos in this.context.Empleados where iddept.Contains(datos.Departamento) select datos;
+            return consulta.ToList();
+        }
+
+
+        #endregion
+
+        #region Departamentos
         public Departamento BuscarDepartamento(int iddept)
         {
-            
+
             return this.context.Departamentos.Where(z => z.Numero == iddept).FirstOrDefault();
         }
 
@@ -33,7 +47,7 @@ namespace MvcCore.Repository
         public List<Departamento> GetDepartamentos()
         {
             //var consulta = from datos in this.context.Departamentos select datos;
-            return this.context.Departamentos.ToList() ;
+            return this.context.Departamentos.ToList();
         }
 
         public void InsertarDepartamento(int iddept, string nombre, string loc)
@@ -53,5 +67,8 @@ namespace MvcCore.Repository
             dept.Nombre = nombre;
             this.context.SaveChanges();
         }
+
+        
+        #endregion
     }
 }

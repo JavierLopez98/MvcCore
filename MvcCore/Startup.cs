@@ -35,10 +35,11 @@ namespace MvcCore
             services.AddTransient<PathProvider>();
             services.AddTransient<RepositoryJoyerias>();
             services.AddTransient<RepositoryAlumno>();
-            //services.AddTransient<IRepositoryDepartamentos, RepositoryDepartamentosSql>();
+            services.AddTransient<IRepositoryDepartamentos, RepositoryDepartamentosSql>();
+            services.AddTransient<IRepositoryHospital,RepositoryHospital>();
             //services.AddTransient<IRepositoryDepartamentos> (x=>new RepositoryDepartamentosOracle(cadenaOracle));
-            services.AddTransient<IRepositoryDepartamentos>(x => new RepositoryDepartamentosMysql(cadenaMySql));
-            services.AddDbContext<DepartamentosContext>(options=>options.UseSqlServer(cadenaSql));
+            //services.AddDbContextPool<DepartamentosContext>(options => options.UseMySql(cadenaMySql, ServerVersion.AutoDetect(cadenaMySql))); ;
+            services.AddDbContext<HospitalContext>(options=>options.UseSqlServer(cadenaSql));
 
             
 

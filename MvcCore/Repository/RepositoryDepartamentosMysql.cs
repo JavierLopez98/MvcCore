@@ -12,52 +12,79 @@ namespace MvcCore.Repository
 {
     public class RepositoryDepartamentosMysql : IRepositoryDepartamentos
     {
-        private MySqlDataAdapter addept;
-        private DataTable tabledept;
-        public RepositoryDepartamentosMysql(String cadena )
+        HospitalContext context;
+        public RepositoryDepartamentosMysql(HospitalContext context)
         {
-            this.addept = new MySqlDataAdapter("select * from dept", cadena);
-            this.tabledept = new DataTable();
-            this.addept.Fill(this.tabledept);
+            this.context = context;
         }
+
         public Departamento BuscarDepartamento(int iddept)
         {
-            var consulta = from datos in this.tabledept.AsEnumerable()
-                           where datos.Field<int>("Dept_no") == iddept
-                           select new Departamento
-                           {
-                               Numero = datos.Field<int>("Dept_no"),
-                               Nombre = datos.Field<String>("dNombre"),
-                               Localidad = datos.Field<String>("loc")
-                           };
-            return consulta.FirstOrDefault();
+            throw new NotImplementedException();
         }
+
+        //public Departamento BuscarDepartamento(int iddept)
+        //{
+        //    return this.context.Departamentos
+        //    //var consulta = from datos in this.tabledept.AsEnumerable()
+        //    //               where datos.Field<int>("Dept_no") == iddept
+        //    //               select new Departamento
+        //    //               {
+        //    //                   Numero = datos.Field<int>("Dept_no"),
+        //    //                   Nombre = datos.Field<String>("dNombre"),
+        //    //                   Localidad = datos.Field<String>("loc")
+        //    //               };
+        //    //return consulta.FirstOrDefault();
+        //}
 
         public void EliminarDepartamento(int iddept)
         {
-            throw new NotImplementedException();
+            Departamento dept = this.BuscarDepartamento(iddept);
+            this.context.Departamentos.Remove(dept);
+            this.context.SaveChanges();
+            
         }
 
         public List<Departamento> GetDepartamentos()
         {
-            var consulta = from datos in this.tabledept.AsEnumerable()
-                           select new Departamento
-            {
-                               Numero=datos.Field<int>("Dept_no"),
-                               Nombre=datos.Field<String>("dNombre"),
-                               Localidad=datos.Field<String>("loc")
-            };
-            return consulta.ToList();
+            //var consulta = from datos in this.tabledept.AsEnumerable()
+            //               select new Departamento
+            //{
+            //                   Numero=datos.Field<int>("Dept_no"),
+            //                   Nombre=datos.Field<String>("dNombre"),
+            //                   Localidad=datos.Field<String>("loc")
+            //};
+            //return consulta.ToList();
+
+            return this.context.Departamentos.ToList();
         }
 
         public void InsertarDepartamento(int iddept, string nombre, string loc)
         {
-            
+            Departamento dept = new Departamento();
+            dept.Numero = iddept;
+            dept.Nombre = nombre;
+            dept.Localidad = loc;
+            this.context.Departamentos.Add(dept);
+            this.context.SaveChanges();
+
+            //DataRow row = this.tabledept.NewRow();
+            //row["Dept_no"] = iddept;
+            //row["dNombre"] = nombre;
+            //row["Loc"] = loc;
+            //this.tabledept.Rows.Add(row);
+            //this.addept.Update(this.tabledept);
+            //this.tabledept.AcceptChanges();
         }
+
+        
 
         public void ModificarDepartamento(int iddept, string nombre, string loc)
         {
-            throw new NotImplementedException();
+            Departamento dept = this.BuscarDepartamento(iddept);
+            dept.Nombre = nombre;
+            dept.Localidad = loc;
+            this.context.SaveChanges();
         }
     }
 }
