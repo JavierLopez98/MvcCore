@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MvcCore.Helpers;
 using MvcCore.Interfaces;
 using MvcCore.Models;
 using MvcCore.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,10 +15,12 @@ namespace MvcCore.Controllers
     public class DepartamentosController : Controller
     {
         IRepositoryHospital repo;
+        PathProvider provider;
 
-        public DepartamentosController(IRepositoryHospital repo)
+        public DepartamentosController(IRepositoryHospital repo,PathProvider provider)
         {
             this.repo = repo;
+            this.provider = provider;
         }
 
         public IActionResult Index()
@@ -34,9 +39,15 @@ namespace MvcCore.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Departamento dept)
+        public async Task<IActionResult> Create(Departamento dept,IFormFile ficheroimagen)
         {
-            this.repo.InsertarDepartamento(dept.Numero, dept.Nombre, dept.Localidad);
+            String filename = ficheroimagen.FileName;
+            String ruta =this.provider.MapPath(filename,Folders.Images);
+            using (var stream = new FileStream(ruta, FileMode.Create))
+            {
+                await ficheroimagen.CopyToAsync(stream);
+            }
+            this.repo.InsertarDepartamento(dept.Numero, dept.Nombre, dept.Localidad, filename);
             return RedirectToAction("Index");
         }
 
@@ -46,8 +57,19 @@ namespace MvcCore.Controllers
             return View(dept);
         }
         [HttpPost]
-        public IActionResult Edit(Departamento dept)
+        public async Task<IActionResult> Edit(Departamento dept,IFormFile ficheroImagen)
         {
+            String filename = "";
+            if (ficheroImagen.Length!=0) {
+                filename = ficheroImagen.FileName;
+            } else  filename = "defaultimg.png";
+            String ruta = this.provider.MapPath(filename, Folders.Images);
+
+            using(var stream =new FileStream(ruta, FileMode.Create))
+            {
+                await ficheroImagen.CopyToAsync(stream);
+            }
+
             this.repo.ModificarDepartamento(dept.Numero, dept.Nombre, dept.Localidad);
             return RedirectToAction("Index");
         }

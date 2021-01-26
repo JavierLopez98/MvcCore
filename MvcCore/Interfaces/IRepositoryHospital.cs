@@ -14,9 +14,12 @@ namespace MvcCore.Interfaces
 
         void ModificarDepartamento(int iddept, String nombre, String loc);
 
+        void ModificarDepartamento(int iddept, String nombre, String loc, String img);
+
         void EliminarDepartamento(int iddept);
 
         void InsertarDepartamento(int iddept, String nombre, String loc);
+        void InsertarDepartamento(int iddept, String nombre, String loc,String img);
         List<Empleado> GetEmpleados();
         List<Empleado> BuscaEmpleadosDept(List<int>iddept);
     }

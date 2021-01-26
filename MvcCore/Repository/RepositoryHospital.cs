@@ -60,6 +60,17 @@ namespace MvcCore.Repository
             this.context.SaveChanges();
         }
 
+        public void InsertarDepartamento(int iddept, string nombre, string loc, string img)
+        {
+            Departamento dept = new Departamento();
+            dept.Nombre = nombre;
+            dept.Numero = iddept;
+            dept.Localidad = loc;
+            dept.Imagen = img;
+            this.context.Departamentos.Add(dept);
+            this.context.SaveChanges();
+        }
+
         public void ModificarDepartamento(int iddept, string nombre, string loc)
         {
             Departamento dept = this.BuscarDepartamento(iddept);
@@ -68,7 +79,18 @@ namespace MvcCore.Repository
             this.context.SaveChanges();
         }
 
-        
+        public void ModificarDepartamento(int iddept, string nombre, string loc, string img)
+        {
+            Departamento dept = this.BuscarDepartamento(iddept);
+            dept.Localidad = loc;
+            dept.Nombre = nombre;
+            dept.Imagen = img;
+            this.context.SaveChanges();
+        }
+
+
+
+
         #endregion
     }
 }
