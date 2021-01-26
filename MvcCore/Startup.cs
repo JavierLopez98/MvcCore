@@ -29,7 +29,9 @@ namespace MvcCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            String cadenaSql = this.configuration.GetConnectionString("cadenasqlcasa");
+            String cadenaSqlAzure = this.configuration.GetConnectionString("cadenasqlazure");
+            String cadenaSqlCasa = this.configuration.GetConnectionString("cadenasqlcasa");
+            String cadenaSqlClase = this.configuration.GetConnectionString("cadenasqlclase");
             String cadenaOracle = this.configuration.GetConnectionString("cadenaoraclecasa");
             String cadenaMySql = this.configuration.GetConnectionString("cadenamysql");
             services.AddTransient<PathProvider>();
@@ -39,9 +41,11 @@ namespace MvcCore
             services.AddTransient<IRepositoryHospital,RepositoryHospital>();
             //services.AddTransient<IRepositoryDepartamentos> (x=>new RepositoryDepartamentosOracle(cadenaOracle));
             //services.AddDbContextPool<DepartamentosContext>(options => options.UseMySql(cadenaMySql, ServerVersion.AutoDetect(cadenaMySql))); ;
-            services.AddDbContext<HospitalContext>(options=>options.UseSqlServer(cadenaSql));
+            //services.AddDbContext<HospitalContext>(options=>options.UseSqlServer(cadenaSqlCasa));
+            services.AddDbContext<HospitalContext>(options => options.UseSqlServer(cadenaSqlClase));
+            //services.AddDbContext<HospitalContext>(options => options.UseSqlServer(cadenaSqlAzure));
 
-            
+
 
             services.AddControllersWithViews();
         }
