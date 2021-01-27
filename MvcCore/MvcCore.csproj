@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Documents\" />
+    <Folder Include="wwwroot\Temporal\" />
   </ItemGroup>
 
   <ItemGroup>

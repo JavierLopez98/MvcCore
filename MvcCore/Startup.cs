@@ -34,7 +34,12 @@ namespace MvcCore
             String cadenaSqlClase = this.configuration.GetConnectionString("cadenasqlclase");
             String cadenaOracle = this.configuration.GetConnectionString("cadenaoraclecasa");
             String cadenaMySql = this.configuration.GetConnectionString("cadenamysql");
+
+            services.AddSingleton<IConfiguration>(this.configuration);
+            services.AddSingleton<FileUploader>();
+            services.AddSingleton<MailSender>();
             services.AddTransient<PathProvider>();
+
             services.AddTransient<RepositoryJoyerias>();
             services.AddTransient<RepositoryAlumno>();
             services.AddTransient<IRepositoryDepartamentos, RepositoryDepartamentosSql>();

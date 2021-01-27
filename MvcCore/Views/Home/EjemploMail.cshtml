@@ -1,0 +1,16 @@
+﻿<h1>Ejemplo Mail Net Core</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <label>Receptor: </label>
+    <input type="text" name="Receptor" class="form-control" />
+    <br />
+    <label>Asunto: </label>
+    <input type="text" name="Asunto" class="form-control" /><br />
+    <label>Mensaje: </label>
+    <textarea name="mensaje" class="form-control"></textarea><br />
+    <label>Seleccione un archivo: </label>
+    <input type="file" name="fichero" class="form-control-file" /><br />
+    <button type="submit" class="btn-success">Enviar Correo</button>
+</form>
+
+<h1>@ViewData["Mensaje"]</h1>
