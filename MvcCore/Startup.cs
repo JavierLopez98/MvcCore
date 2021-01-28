@@ -40,6 +40,7 @@ namespace MvcCore
             services.AddSingleton<MailSender>();
             services.AddTransient<PathProvider>();
 
+            services.AddTransient<RepositoryUsuarios>();
             services.AddTransient<RepositoryJoyerias>();
             services.AddTransient<RepositoryAlumno>();
             services.AddTransient<IRepositoryDepartamentos, RepositoryDepartamentosSql>();

@@ -20,6 +20,7 @@ namespace MvcCore.Controllers
         IConfiguration configuration;
         FileUploader uploader;
         MailSender sender;
+        
 
         public HomeController(PathProvider provider,IConfiguration configuration,FileUploader uploader,MailSender sender)
         {
@@ -27,6 +28,7 @@ namespace MvcCore.Controllers
             this.configuration = configuration;
             this.uploader = uploader;
             this.sender = sender;
+            
         }
 
         public IActionResult Index()
@@ -117,19 +119,27 @@ namespace MvcCore.Controllers
         [HttpPost]
         public IActionResult CifradoHash(String contenido, String resultado,String accion)
         {
-            byte[] entrada;
-            byte[] salida;
 
-            //conversor
-            UnicodeEncoding encoding = new UnicodeEncoding();
+            String res = CypherService.EncriptarTextoBasico(contenido);
 
-            //cifrador
-            SHA1Managed sha = new SHA1Managed();
-            entrada = encoding.GetBytes(contenido);
-            salida = sha.ComputeHash(entrada);
-            String res = encoding.GetString(salida);
-            
+            if (accion.ToLower() == "cifrar") ViewData["Resultado"] = res;
+            else if (accion.ToLower() == "comparar")
+            {
+                if (resultado != res) ViewData["Mensaje"] = "<h1>No son iguales</h1>";
+                else ViewData["Mensaje"] = "<h1>Iguales</h1>";
+            }
+            return View();
+        }
 
+        public IActionResult CifradoHashEficiente()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CifradoHashEficiente(String contenido,int iteraciones,String resultado,String accion,String salt)
+        {
+            //String res = CypherService.CifrarContenido(contenido, iteraciones, salt);
+            String res = "";
             if (accion.ToLower() == "cifrar") ViewData["Resultado"] = res;
             else if (accion.ToLower() == "comparar")
             {
