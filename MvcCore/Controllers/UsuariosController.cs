@@ -42,6 +42,9 @@ namespace MvcCore.Controllers
         [HttpPost]
         public IActionResult Credenciales(String username,String Password)
         {
+            Usuario user = this.repo.UserLogIn(username, Password);
+            if (user == null) ViewData["Mensaje"] = "Usuario/Password no validos";
+            else ViewData["Mensaje"] = "Credenciales correntas, Sr/Sra " + user.Nombre;
             return View();
         }
     }

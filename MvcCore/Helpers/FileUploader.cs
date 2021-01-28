@@ -18,7 +18,7 @@ namespace MvcCore.Helpers
 
         public async Task<String> UploadFileAsync(IFormFile fichero,Folders folder)
         {
-            String filename = fichero.FileName;
+            String filename = Toolkit.NormalizarFilename(fichero.FileName);
             String ruta = this.provider.MapPath(filename, folder);
 
             using(var stream=new FileStream(ruta, FileMode.Create))

@@ -39,7 +39,7 @@ namespace MvcCore.Repository
                 String salt = user.Salt;
                 byte[] passbbdd = user.Password;
                 byte[] passtemporal = CypherService.CifrarContenido(password, salt);
-                if (Toolkit.CompararArrayBytes(passbbdd,passtemporal)) return;
+                if (Toolkit.CompararArrayBytes(passbbdd,passtemporal)) return user;
                 else return null;
             }
             

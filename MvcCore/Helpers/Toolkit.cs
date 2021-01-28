@@ -18,5 +18,18 @@ namespace MvcCore.Helpers
             }
             return true;
         }
+
+        public static String NormalizarFilename(String filename)
+        {
+            String ending ='.'+ filename.Split('.').Last();
+            String cadena = "";
+            for(int i = 0; i < filename.LastIndexOf('.'); i++)
+            {
+                if (Char.IsDigit(filename[i]) || Char.IsLetter(filename[i])) cadena += filename[i];
+            }
+
+            cadena += ending;
+            return cadena;
+        }
     }
 }
