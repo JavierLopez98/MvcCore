@@ -1,0 +1,28 @@
+﻿@model List<Persona>
+
+<h1>Almacenar multiples session</h1>
+
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item">
+        <a asp-action="AlmacenarMultipleSession"
+           asp-controller="Home"
+           asp-route-accion="almacenar">
+            Almacenar Session
+        </a>
+        <a asp-action="AlmacenarMultipleSession"
+           asp-controller="Home"
+           asp-route-accion="mostrar">
+            Mostrar Session
+        </a>
+    </li>
+</ul>
+
+@if (Model != null)
+{
+    <ul class="list-group">
+        @foreach (Persona person in Model)
+        {
+        <li class="list-group-item">@person.Nombre | @person.Edad | @person.Hora</li>
+        }
+    </ul>
+}

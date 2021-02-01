@@ -29,6 +29,12 @@ namespace MvcCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession(Options=>
+            {
+                Options.IdleTimeout = TimeSpan.FromMinutes(10);
+            });
+            
             String cadenaSqlAzure = this.configuration.GetConnectionString("cadenasqlazure");
             String cadenaSqlCasa = this.configuration.GetConnectionString("cadenasqlcasa");
             String cadenaSqlClase = this.configuration.GetConnectionString("cadenasqlclase");
@@ -67,6 +73,7 @@ namespace MvcCore
             app.UseRouting();
 
             app.UseStaticFiles();
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

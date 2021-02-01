@@ -7,10 +7,13 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MvcCore.Helpers;
+using MvcCore.Models;
+
 
 namespace MvcCore.Controllers
 {
@@ -148,5 +151,68 @@ namespace MvcCore.Controllers
             }
             return View();
         }
+
+        public IActionResult EjemploSession(String accion)
+        {
+            if (accion == "almacenar")
+            {
+                Persona person = new Persona();
+                person.Nombre = "Alumno";
+                person.Edad = 27;
+                person.Hora = DateTime.Now.ToLongDateString();
+                //byte[] data=Toolkit.ObjectToByteArray(person);
+                //HttpContext.Session.Set("persona", data);
+                String data = Toolkit.SerializaJsonObject(person);
+                HttpContext.Session.SetString("Persona", data);
+                ViewData["Mensaje"] = "Datos almacenados en Session: " + DateTime.Now.ToLongTimeString();
+            }
+            else if (accion == "mostrar")
+            {
+                //byte[] data = HttpContext.Session.Get("persona");
+                //Persona person = Toolkit.ByteArrayToObject(data) as Persona;
+                String data = HttpContext.Session.GetString("Persona");
+                Persona person = Toolkit.JsonToObject<Persona>(data);
+                ViewData["autor"] = person.Nombre + ", Edad: " + person.Edad;
+                ViewData["hora"] = person.Hora;
+                ViewData["Mensaje"] = "Mostrando datos";
+            }
+                return View();
+        }
+
+        public IActionResult AlmacenarMultipleSession(String accion)
+        {
+            if (accion == "almacenar")
+            {
+                List<Persona> personas = new List<Persona>();
+                Persona person1 = new Persona();
+                person1.Nombre = "Alumno1";
+                person1.Edad = 27;
+                person1.Hora = DateTime.Now.ToLongDateString();
+                personas.Add(person1);
+                Persona person2 = new Persona();
+                person2.Nombre = "Alumno2";
+                person2.Edad = 23;
+                person2.Hora = DateTime.Now.ToLongDateString();
+                personas.Add(person2);
+                //byte[] data = Toolkit.ObjectToByteArray(personas);
+                //HttpContext.Session.Set("personas", data);
+                String data = Toolkit.SerializaJsonObject(personas);
+                HttpContext.Session.SetString("personas", data);
+                ViewData["mensaje"] = "Almacenado " + DateTime.Now.ToLongDateString();
+                
+            }
+            else if (accion == "mostrar")
+            {
+                //byte[] data = HttpContext.Session.Get("personas");
+                //List<Persona> personas = Toolkit.ByteArrayToObject(data) as List<Persona>;
+                String data = HttpContext.Session.GetString("personas");
+                List<Persona> personas = Toolkit.JsonToObject<List<Persona>>(data);
+                ViewData["mensaje"] = "recuperando datos de Session";
+                return View(personas);
+            }
+            return View();
+        }
+
+        
     }
 }

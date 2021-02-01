@@ -1,0 +1,21 @@
+﻿<h1>Ejemplo Session</h1>
+<h2>@ViewData["Mensaje"]</h2>
+
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item">
+        <a asp-action="EjemploSession"
+           asp-controller="Home"
+           asp-route-accion="almacenar">
+            Almacenar Session
+        </a>
+        <a asp-action="EjemploSession"
+           asp-controller="Home"
+           asp-route-accion="mostrar">
+            Mostrar Session
+        </a>
+    </li>
+</ul>
+
+<hr />
+<h2>Autor: @ViewData["autor"]</h2>
+<h2>Hora: @ViewData["hora"]</h2>
