@@ -11,6 +11,7 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MvcCore.Extensions;
 using MvcCore.Helpers;
 using MvcCore.Models;
 
@@ -196,8 +197,11 @@ namespace MvcCore.Controllers
                 personas.Add(person2);
                 //byte[] data = Toolkit.ObjectToByteArray(personas);
                 //HttpContext.Session.Set("personas", data);
-                String data = Toolkit.SerializaJsonObject(personas);
-                HttpContext.Session.SetString("personas", data);
+                //String data = Toolkit.SerializaJsonObject(personas);
+                //HttpContext.Session.SetString("personas", data);
+
+                HttpContext.Session.SetObject("Personas", personas);
+
                 ViewData["mensaje"] = "Almacenado " + DateTime.Now.ToLongDateString();
                 
             }
@@ -205,8 +209,9 @@ namespace MvcCore.Controllers
             {
                 //byte[] data = HttpContext.Session.Get("personas");
                 //List<Persona> personas = Toolkit.ByteArrayToObject(data) as List<Persona>;
-                String data = HttpContext.Session.GetString("personas");
-                List<Persona> personas = Toolkit.JsonToObject<List<Persona>>(data);
+                //String data = HttpContext.Session.GetString("personas");
+                //List<Persona> personas = Toolkit.JsonToObject<List<Persona>>(data);
+                List<Persona> personas = HttpContext.Session.GetObject<List<Persona>>("Personas");
                 ViewData["mensaje"] = "recuperando datos de Session";
                 return View(personas);
             }
