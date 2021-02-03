@@ -29,7 +29,9 @@ namespace MvcCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
             services.AddDistributedMemoryCache();
+            services.AddResponseCaching();
             services.AddSession(Options=>
             {
                 Options.IdleTimeout = TimeSpan.FromMinutes(10);
@@ -71,8 +73,9 @@ namespace MvcCore
             }
 
             app.UseRouting();
-
+            
             app.UseStaticFiles();
+            app.UseResponseCaching();
             app.UseSession();
             app.UseEndpoints(endpoints =>
             {

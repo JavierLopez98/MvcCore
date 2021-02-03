@@ -1,4 +1,5 @@
-﻿using MvcCore.Data;
+﻿using Microsoft.Extensions.Caching.Memory;
+using MvcCore.Data;
 using MvcCore.Interfaces;
 using MvcCore.Models;
 using System;
@@ -11,9 +12,11 @@ namespace MvcCore.Repository
     public class RepositoryHospital : IRepositoryHospital
     {
         HospitalContext context;
-        public RepositoryHospital(HospitalContext context)
+        private IMemoryCache cache;
+        public RepositoryHospital(HospitalContext context,IMemoryCache cache)
         {
             this.context = context;
+            this.cache = cache;
         }
 
         #region Empleados

@@ -53,6 +53,29 @@
                         <a class="dropdown-item"
                            asp-controller="Usuarios"
                            asp-action="Index">Usuarios</a>
+                        <a class="dropdown-item"
+                           asp-action="HoraSistema"
+                           asp-controller="Caching">
+                            Actualizar página
+                        </a>
+                        <a class="dropdown-item"
+                           asp-action="HoraSistema"
+                           asp-controller="Caching"
+                           asp-route-tiempo="15">
+                            cache de 15s
+                        </a>
+                        <a class="dropdown-item"
+                           asp-action="HoraSistema"
+                           asp-controller="Caching"
+                           asp-route-tiempo="20">
+                            cache de 20s
+                        </a>
+                        <a class="dropdown-item"
+                           asp-action="HoraSistemaDistribuida"
+                           asp-controller="Caching"
+                           >
+                            cache Distribuida
+                        </a>
                     </div>
                 </li>
             </ul>
