@@ -34,9 +34,10 @@ namespace MvcCore
             services.AddResponseCaching();
             services.AddSession(Options=>
             {
-                Options.IdleTimeout = TimeSpan.FromMinutes(10);
+                Options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
             
+
             String cadenaSqlAzure = this.configuration.GetConnectionString("cadenasqlazure");
             String cadenaSqlCasa = this.configuration.GetConnectionString("cadenasqlcasa");
             String cadenaSqlClase = this.configuration.GetConnectionString("cadenasqlclase");
@@ -55,8 +56,8 @@ namespace MvcCore
             services.AddTransient<IRepositoryHospital,RepositoryHospital>();
             //services.AddTransient<IRepositoryDepartamentos> (x=>new RepositoryDepartamentosOracle(cadenaOracle));
             //services.AddDbContextPool<DepartamentosContext>(options => options.UseMySql(cadenaMySql, ServerVersion.AutoDetect(cadenaMySql))); ;
-            //services.AddDbContext<HospitalContext>(options=>options.UseSqlServer(cadenaSqlCasa));
-            services.AddDbContext<HospitalContext>(options => options.UseSqlServer(cadenaSqlClase));
+            services.AddDbContext<HospitalContext>(options=>options.UseSqlServer(cadenaSqlCasa));
+            //services.AddDbContext<HospitalContext>(options => options.UseSqlServer(cadenaSqlClase));
             //services.AddDbContext<HospitalContext>(options => options.UseSqlServer(cadenaSqlAzure));
 
 

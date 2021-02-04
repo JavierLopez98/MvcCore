@@ -1,0 +1,44 @@
+﻿@model List<Empleado>
+
+<h1>Mostrar Empleados Sessin</h1>
+
+<a asp-controller="EmpleadosSession"
+   asp-action="AlmacenarEmpleados">
+    Volver a Almacenar Empleados
+</a>
+
+@if (Model == null)
+{
+    <h2 style="color:red">No existen empleados en Session</h2>
+}
+else
+{
+<form method="post" >
+    <button type="submit" class="btn btn-info">Realizar pedido</button>
+            <ul class="list-group">
+        @foreach (Empleado emple in Model)
+        {
+            <li class="list-group-item">
+                @emple.Apellido
+                <a asp-action="MostrarEmpleados"
+                   asp-controller="EmpleadosSession"
+                   asp-route-eliminar="@emple.IdEmpleado"
+                   class="btn btn-danger">Eliminar de la lista</a>||||
+                <a asp-action="MostrarEmpleados"
+                   asp-controller="EmpleadosSession"
+                   asp-route-sumar="@emple.IdEmpleado"
+                   class="btn btn-secondary">+</a> |
+                <a asp-action="MostrarEmpleados"
+                   asp-controller="EmpleadosSession"
+                   asp-route-restar="@emple.IdEmpleado"
+                   class="btn btn-secondary"> -</a>
+                <input type="number"value="1"class="form-control" name="cantidades"/>
+            </li>
+        }
+    </ul>
+</form>
+
+    <a asp-action="MostrarCarrito"
+       asp-controller="EmpleadosSession"
+       class="btn btn-primary">Realizar pedido</a>
+}

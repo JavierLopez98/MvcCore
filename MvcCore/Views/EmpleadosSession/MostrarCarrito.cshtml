@@ -1,0 +1,16 @@
+﻿@model List<Empleado>
+@{ 
+    List<CarritoEmpleados> carrito = Context.Session.GetObject<List<CarritoEmpleados>>("carrito");
+}
+
+<h1>Carrito de empleados</h1>
+
+<h2>Articulos comprados</h2>
+
+<ul>
+    @for (int i=0;i<Model.Count;i++)
+    {
+    <li>@Model[i].Apellido | @carrito[i].cantidad</li>
+    }
+
+</ul>

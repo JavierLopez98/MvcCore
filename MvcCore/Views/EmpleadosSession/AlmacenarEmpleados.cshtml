@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MvcCore.Models.Empleado>
+
+@{
+    ViewData["Title"] = "AlmacenarEmpleados";
+    List<int> sessionemp=Context.Session.GetObject<List<int>>("empleados");
+}
+
+<h1>AlmacenarEmpleados</h1>
+
+<p>
+    <a asp-action="MostrarEmpleados" asp-controller="EmpleadosSession">Mostrar Session</a>
+</p>
+<h1>@ViewData["mensaje"]</h1>
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Oficio)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Oficio)
+            </td>
+            
+            <td>
+                @if (sessionemp == null)
+                {
+                    <a asp-controller="EmpleadosSession"
+                       asp-action="AlmacenarEmpleados"
+                       asp-route-idempleado="@item.IdEmpleado">
+                        Almacenar Empleados
+                    </a>
+                }
+                else if (!sessionemp.Contains(item.IdEmpleado))
+                {
+                    <a asp-controller="EmpleadosSession"
+                       asp-action="AlmacenarEmpleados"
+                       asp-route-idempleado="@item.IdEmpleado">
+                        Almacenar Empleados
+                    </a>
+                }
+                else
+                {
+                    
+                }
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

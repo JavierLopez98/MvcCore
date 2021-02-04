@@ -30,6 +30,12 @@ namespace MvcCore.Repository
             return consulta.ToList();
         }
 
+        public Empleado BuscaEmpleadoId(int idemp)
+        {
+            var consulta = from datos in this.context.Empleados where datos.IdEmpleado == idemp select datos;
+            return consulta.FirstOrDefault();
+        }
+
 
         #endregion
 
@@ -90,9 +96,15 @@ namespace MvcCore.Repository
             dept.Imagen = img;
             this.context.SaveChanges();
         }
+        #endregion
+        #region Session
 
+        public List<Empleado> GetEmpleadosSession(List<int> idempleados)
+        {
+            var consulta = from datos in this.context.Empleados where idempleados.Contains(datos.IdEmpleado) select datos;
 
-
+            return consulta.ToList();
+        }
 
         #endregion
     }

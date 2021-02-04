@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MvcCore.Models
 {
+    
     [Table("Emp")]
     public class Empleado
     {
