@@ -1,0 +1,15 @@
+﻿´@{
+    int NumeroCompra = Context.Session.GetInt32("numEmpleados").Value;
+}
+@if (NumeroCompra != 0)
+{
+    <li class="nav-item">
+        Tiene @NumeroCompra productos en su carrito
+    </li>
+}
+
+
+
+<li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+</li>

@@ -22,15 +22,18 @@ namespace MvcCore.Controllers
         {
             if (idempleado != null)
             {
+                int numeroEmpleados=0;
                 List<int> sessionemp;
                 List<CarritoEmpleados> carrito;
                 if (HttpContext.Session.GetObject<List<int>>("empleados")==null)
                 {
+                    numeroEmpleados = 1;
                     sessionemp = new List<int>();
                     carrito = new List<CarritoEmpleados>();
                 }
                 else
                 {
+                    numeroEmpleados=HttpContext.Session.GetInt32("numEmpleados").Value;
                     sessionemp = HttpContext.Session.GetObject<List<int>>("empleados");
                     carrito = HttpContext.Session.GetObject<List<CarritoEmpleados>>("carrito");
                 }
@@ -41,9 +44,11 @@ namespace MvcCore.Controllers
                         cantidad=1,
                         idempleado=idempleado.Value
                     });
+                    numeroEmpleados++;
                     sessionemp.Add(idempleado.GetValueOrDefault());
                     HttpContext.Session.SetObject("empleados", sessionemp);
                     HttpContext.Session.SetObject("carrito", carrito);
+                    HttpContext.Session.SetInt32("numEmpleados", numeroEmpleados);
                 }
                 
                 ViewData["mensaje"] = "datos almacenados: " + sessionemp.Count;
@@ -56,7 +61,7 @@ namespace MvcCore.Controllers
         {
             List<CarritoEmpleados> carrito = HttpContext.Session.GetObject<List<CarritoEmpleados>>("carrito");
             List<int> sessionemp = HttpContext.Session.GetObject<List<int>>("empleados");
-            
+            int numeroEmpleados = HttpContext.Session.GetInt32("numEmpleados").Value;
             if (sessionemp == null)
             {
                 return View();
@@ -66,7 +71,8 @@ namespace MvcCore.Controllers
                 if (eliminar != null)
                 {
                     sessionemp.Remove(eliminar.Value);
-                    
+                    numeroEmpleados--;
+                    HttpContext.Session.SetInt32("numEmpleados", numeroEmpleados);
                     HttpContext.Session.SetObject("empleados", sessionemp);
                 }
                 if (sumar != null)
