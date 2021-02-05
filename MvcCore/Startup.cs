@@ -56,8 +56,8 @@ namespace MvcCore
             services.AddTransient<IRepositoryHospital,RepositoryHospital>();
             //services.AddTransient<IRepositoryDepartamentos> (x=>new RepositoryDepartamentosOracle(cadenaOracle));
             //services.AddDbContextPool<DepartamentosContext>(options => options.UseMySql(cadenaMySql, ServerVersion.AutoDetect(cadenaMySql))); ;
-            services.AddDbContext<HospitalContext>(options=>options.UseSqlServer(cadenaSqlCasa));
-            //services.AddDbContext<HospitalContext>(options => options.UseSqlServer(cadenaSqlClase));
+            //services.AddDbContext<HospitalContext>(options=>options.UseSqlServer(cadenaSqlCasa));
+            services.AddDbContext<HospitalContext>(options => options.UseSqlServer(cadenaSqlClase));
             //services.AddDbContext<HospitalContext>(options => options.UseSqlServer(cadenaSqlAzure));
 
 

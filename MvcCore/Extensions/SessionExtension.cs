@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace MvcCore.Extensions
 {
-    public static class SessionExtension 
+    public static class SessionExtension
     {
-        public static void SetObject(this ISession session, String key,object value)
+        public static void SetObject(this ISession session, String key, object value)
         {
             String data = Toolkit.SerializaJsonObject(value);
             session.SetString(key, data);
         }
-        public static T GetObject<T>(this ISession session,String key)
+        public static T GetObject<T>(this ISession session, String key)
         {
             String data = session.GetString(key);
             if (data == null)
@@ -23,5 +23,7 @@ namespace MvcCore.Extensions
             }
             return Toolkit.JsonToObject<T>(data);
         }
+
+        
     }
 }
